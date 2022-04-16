@@ -26,4 +26,3 @@ add_executable(${PROJECT_NAME} ${APP_SOURCES})
 set(LIBRARY_NAME World)
 add_library(${LIBRARY_NAME} SHARED ${LIB_SOURCES})
 target_link_libraries(${PROJECT_NAME} ${LIBRARY_NAME})
-
