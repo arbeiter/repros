@@ -9,6 +9,12 @@ using namespace std;
 #include <cstdlib>
 void test_1();
 void test_2();
+void test_3(); 
+/*
+template<typename T> class superChunk {
+  std::vector<std::vector<std::vector<T*>>> chunks;
+};
+*/
 
 int main() {
   Project::World hello;
@@ -27,8 +33,10 @@ int main() {
     // std::cout << get<0>(current) << std::endl;
   }
   hello.greet();
-  test_1();
-  test_2();
+  //test_1();
+  //test_2();
+  std::cout << "ELLO";
+  test_3();
   return EXIT_SUCCESS;
 }
 
@@ -91,16 +99,29 @@ void test_2() {
   ants = new X*[10];
   for(int i = 0; i < 10; i++) {
     ants[i] = new X(i);
-    ants[i]->print();
+    //ants[i]->print();
   }
 
-  X ***yants;
-  yants = new X**[10];
+  X ***ptr_to_two_d;
+  ptr_to_two_d = new X**[10];
   for(int i = 0; i < 10; i++) {
-    yants[i] = new X*[10];
+    ptr_to_two_d[i] = new X*[10];
     for(int j = 0; j < 10; j++) {
-      yants[i][j] = new X(i+j);
-      yants[i][j]->print();
+      ptr_to_two_d[i][j] = new X(i+j);
+      //ptr_to_two_d[i][j]->print();
+    }
+    std::cout << std::endl;
+  }
+  X ****ptr_to_three_d;
+  ptr_to_three_d = new X***[10];
+  for(int i = 0; i < 10; i++) {
+    ptr_to_three_d[i] = new X**[10];
+    for(int j = 0; j < 10; j++) {
+      ptr_to_three_d[i][j] = new X*[10];
+      for(int k = 0; k < 10; k++) {
+        ptr_to_three_d[i][j][k] = new X(i+j+k);
+        ptr_to_three_d[i][j][k]->print();
+      }
     }
     std::cout << std::endl;
   }
@@ -116,4 +137,59 @@ void test_2() {
     std::cout<< (*p)[i]->z << std::endl;
   }
   */
+}
+
+void test_3() {
+  /*
+  std::cout << 142;
+  std::vector<X *> v;
+  for(int i = 0; i < 10; i++) 
+    v.push_back(new X(10));
+
+  std::vector<std::vector<X *>> yo;
+  for(int x = 0; x < 10; x++)
+    for(int y = 0; y < 10; y++)
+      yo[x][y] = new X(10);
+      */
+
+  /* BAD!!! Copies the same data into all */
+  /*
+  std::vector<std::vector<std::vector<X *>>> y;
+  std::vector<X *> z(5, new X(1));
+  // z[0] -> print();
+  // std::cout << z[0] << std::endl;
+  // std::cout << z[1] << std::endl;
+  std::vector<std::vector<X *>> a(5, z);
+  int rows = 10;
+  int cols = 10;
+  int breadths = 10;
+
+  */
+  std::cout << 162;
+  typedef vector<X *> v1d;
+  typedef vector<v1d> v2d;
+  typedef vector<v2d> v3d;
+  int rows = 10;
+  int cols = 10;
+  int breadths = 10;
+  v3d superChunk(rows, v2d(cols, v1d(breadths, new X(1))));
+  std::cout << 166;
+  // Add z  wall
+  for(int i = 0; i < rows; i++) {
+    for(int j = 0; j < cols; j++) {
+      superChunk[i][j].push_back(new X(111));
+    }
+  }
+
+  std::cout << "YOO " << std::endl;
+  superChunk[9][9][10]->print();
+
+/*
+  std::vector<std::vector<std::vector<X *>>> v;
+  for(int i = 0; i < 10; i++) 
+    for(int j = 0; j < 10; j++)
+      for(int k = 0; k < 10; k++)
+        v.push_back(new X(10));
+  */
+  // vector<vector<vector<int> > > vec (5,vector<vector<int> >(3,vector <int>(2,4)));
 }
