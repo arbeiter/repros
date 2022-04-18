@@ -37,10 +37,12 @@ class SuperChunk {
   int cols = 10;
   int breadths = 10;
   v3d superChunk;
+  v1d chunk;
 
   public:
   SuperChunk() {
-    v3d superChunk(rows, v2d(cols, v1d(breadths, new Cube(texture_type::air))));
+    superChunk = v3d(rows, v2d(cols, v1d(breadths, new Cube(texture_type::air))));
+    
     for(int i = 0; i < rows; i++) {
       for(int j = 0; j < cols; j++) {
         for(int k = 0; k < breadths; k++) {
@@ -49,12 +51,19 @@ class SuperChunk {
         }
       }
     }
+
+    /*
+    chunk = v1d(new Cube(texture_type::air));
+    for(int i = 0; i < rows; i++) {
+      chunk[i] = new Cube(texture_type::air);
+    }
+    */
   }
 
   ~SuperChunk() {}
 
   Cube* get(int x, int y, int z) {
-    return superChunk[x][y][z];
+    return superChunk[0][0][0];
   }
 
   void addWall() {
@@ -99,12 +108,16 @@ class TerrainGen {
       int chunk_z = z / 10;
 
       Cube *chunk = sc.get(chunk_x, chunk_y, chunk_z);
+      chunk->shout();
       int in_x = x % 10;
       int in_y = y % 10;
       int in_z = z % 10;
       //Position voxelPos = { in_x, in_y, in_z };
       //chunk->setVoxel(voxelPos, type);
-   }
+  }
+
+  void billChunk(int x) {
+  }
 
   void seedData() {
     fillChunk(0, 0, 0);
